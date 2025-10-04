@@ -3,14 +3,23 @@ import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import type { DonghuaCardType } from "@/lib/types"
+import { extractDonghuaSlug } from "@/lib/utils"
 
 interface DonghuaCardProps {
   donghua: DonghuaCardType
 }
 
 export function DonghuaCard({ donghua }: DonghuaCardProps) {
+  const donghuaSlug = extractDonghuaSlug(donghua.slug)
+
+  console.log("[v0] DonghuaCard:", {
+    originalSlug: donghua.slug,
+    extractedSlug: donghuaSlug,
+    title: donghua.title,
+  })
+
   return (
-    <Link href={`/detail/${donghua.slug}`}>
+    <Link href={`/detail/${donghuaSlug}`}>
       <Card className="group overflow-hidden transition-all hover:shadow-lg hover:scale-105">
         <CardContent className="p-0">
           <div className="relative aspect-[2/3] overflow-hidden">

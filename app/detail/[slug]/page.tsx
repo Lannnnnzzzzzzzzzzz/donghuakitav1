@@ -9,6 +9,7 @@ import Link from "next/link"
 import { Play, Calendar, Star } from "lucide-react"
 import type { DonghuaDetail } from "@/lib/types"
 import { fetchFromAPI } from "@/lib/api"
+import EpisodeList from "@/components/episode-list"
 
 async function getDonghuaDetail(slug: string) {
   try {
@@ -22,9 +23,9 @@ async function getDonghuaDetail(slug: string) {
 export default async function DetailPage({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: { slug: string }
 }) {
-  const { slug } = await params
+  const { slug } = params
   const data: DonghuaDetail | null = await getDonghuaDetail(slug)
 
   if (!data) {
@@ -154,18 +155,7 @@ export default async function DetailPage({
           {data.episodes_list && data.episodes_list.length > 0 && (
             <div className="space-y-4">
               <h2 className="text-2xl font-bold">Episodes</h2>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3">
-                {data.episodes_list.map((episode) => (
-                  <Button key={episode.slug} asChild variant="outline" className="h-auto py-3 bg-transparent">
-                    <Link href={`/watch/${episode.slug}`}>
-                      <div className="flex flex-col items-center gap-1">
-                        <Play className="h-4 w-4" />
-                        <span className="text-xs font-medium text-center">{episode.episode}</span>
-                      </div>
-                    </Link>
-                  </Button>
-                ))}
-              </div>
+              <EpisodeList episodes={data.episodes_list} poster={data.poster} />
             </div>
           )}
         </div>
