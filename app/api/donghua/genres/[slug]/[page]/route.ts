@@ -2,9 +2,9 @@ import { type NextRequest, NextResponse } from "next/server"
 
 const BASE_URL = "https://www.sankavollerei.com"
 
-export async function GET(request: NextRequest, { params }: { params: Promise<{ slug: string; page: string }> }) {
+export async function GET(request: NextRequest, { params }: { params: { slug: string; page: string } }) {
   try {
-    const { slug, page } = await params
+    const { slug, page } = params
     const response = await fetch(`${BASE_URL}/anime/donghua/genres/${slug}/${page}`, {
       headers: {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
